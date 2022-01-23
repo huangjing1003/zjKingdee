@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="project" basedir="." default="copyFile">
+	<property name="shr_home" value="W:\eas\Server" />
+ 	<property name="web_server" value="${shr_home}\server\deploy\easweb.ear\eas_web.war"></property>
+	
+    <target name="copyFile">
+		<!-- addon -->
+    	<copy todir="${web_server}\addon\customer\web">
+			<fileset dir="${basedir}\web" excludes="**/.svn/**"/>
+		</copy>
+    </target>
+</project>

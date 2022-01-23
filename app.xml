@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<app>
+	<name>customer</name>
+	<version>sHRV1.5!20140315.001</version>
+	<alias>客户化定制</alias>
+	<remark><![CDATA[客户化定制]]></remark>
+	<author>Kingdee</author>
+	<authorId>A00001</authorId>
+</app>

@@ -1,0 +1,209 @@
+============================================请假单改造=============================================
+名称：请假单-ATS-请假单批量新增form(专员)
+模型：com.kingdee.eas.hr.ats.app.AtsLeaveBill
+uipk:com.kingdee.eas.hr.ats.app.AtsLeaveBillAllBatchForm
+   <script src="${appPath}/customer/web/js/shr/ats/atsLeaveBillBatchEditExt.js" />
+    <jsClass name="shr.ats.AtsLeaveBillBatchEditExt" />
+    <handler class="com.kingdee.shr.ats.web.handler.AtsLeaveBillBatchEditHandlerExt" />
+    
+    
+ 名称：机票款额度_表单
+ 模型:com.kingdee.eas.hr.affair.app.AirticketBnsLmt
+uipk:com.kingdee.eas.hr.affair.app.AirticketBnsLmt.form 
+    视图内容:
+       <script src="${appPath}/customer/web/js/shr/base/depcustombill/DepCustomBillBnsLmtEditExt.js" />
+       <jsClass name="shr.custom.bizbill.DepCustomBillBnsLmtEditExt" />
+       <handler class="com.kingdee.shr.base.syssetting.web.handler.DepCustomBillBnsLmtEditHandler" />
+    
+    
+名称:ATS-存在假期档案历史的员工-机票额度F7
+模型：com.kingdee.eas.hr.ats.app.AtsHolidayFileHis
+URI:com.kingdee.eas.hr.ats.app.ExistHolidayFileHisForAdmin.F7.Lmt
+uipk:com.kingdee.eas.hr.ats.app.ExistHolidayFileHisForAdmin.F7.Lmt
+视图内容:
+<?xml version="1.0" encoding="UTF-8"?>
+<navigateList relatedField="adminOrgUnit">
+    <header>
+        <searchView uipk="com.kingdee.eas.hr.ats.app.PersonPosition4Person.search" />
+        <handler class="com.kingdee.shr.ats.web.handler.F7.AtsHolidayFileListF7ListHandler" />
+    </header>
+    <fastFilter>
+        <filterItem name="appendShow" alias="追加显示" multicheck="true" enumOptions="{'type':'String','value':[ {'value': 'includeSpecialDelegatedPerson', 'alias': '代管员工'},{'value': 'showAttendanceFileHis', 'alias': '历史档案'},{'value': 'showNoAtsFile', 'alias': '失效档案'}]}" />
+        <filterItem selectAll="false" name="advancedFilter" alias="高级过滤" widgetType="add" />
+    </fastFilter>
+    <treeNavigation extendOptions="{'isOrgNavigation':'true','isContainLower':'true', 'isSealUp':'false'}">
+        <navDomain>[('id','=','$UserAdminRangeFilter')]</navDomain>
+    </treeNavigation>
+    <requireAddNew>false</requireAddNew>
+    <!-- 扩展的去掉了档案id，不然会有重复的数据
+单据选择假期档案使用, 加上了职业信息的职员列表query: 查询person,需要职业信息，因为Person是BOS最基础的表，不能修改，没有从person到PersonPosition的关联属性，所以***只有PersonPosition做主表***关联得到Person.
+-->
+    <grid name="PersonUIView" query="com.kingdee.eas.hr.ats.app.PersonExistHolidayFileHisQuery" sorterItems="adminOrgUnit.longNumber,primaryPosition.number,person.number">
+        <field name="id" label="人员id" type="hidden" />
+        <field name="person.number" label="员工编码" width="100" />
+        <field name="name" label="姓名" width="100" />
+        <field name="position.name" label="任职职位" />
+        <field name="hrOrgUnit.id" label="考勤业务组织id" type="hidden" />
+        <field name="adminUnit" label="所属行政组织" width="280" />
+        <field name="holidayFileHis.EFFDT" label="生效日期" dataType="date" width="70" />
+        <field name="holidayFileHis.LEFFDT" label="失效日期" dataType="date" width="70" />
+        <field name="adminOrgUnit.id" label="组织id" type="hidden" />
+        <field name="primaryPosition.id" label="岗位id" type="hidden" />
+        <field name="adminOrgUnit.longNumber" type="hidden" label="组织长编码" />
+        <field name="adminOrgUnit.displayName" type="hidden" label="组织长名称" />
+        <field name="person.employeeType.number" type="hidden" label="用工关系编码" />
+        <field name="person.employeeType.name" label="用工关系状态" />
+        <!--<field name="holidayFileHis.id" label="假期档案历史id" type="hidden" />-->
+    </grid>
+</navigateList>
+
+    
+ ====================================================osf配置文件================================================
+ 编码:Limit152
+名称:取人员的主要任职组织和机票额度起始日期，结束日期，年个人机票额度的计算
+服务类型:本地服务
+服务级别:模块级
+所属领域:人事-EMP
+服务名称:getPersonAnnlLimit
+类别:员工信息
+配置:
+<service name="getPersonAnnlLimit" interface="com.kingdee.bos.bsf.service.app.IHRMsfService"
+ class="com.kingdee.shr.base.syssetting.web.service.GetPersonAnnlLimit"
+version="1.0" model="BASE">
+<description>取人员的主要任职组织和机票额度起始日期，结束日期，年个人机票额度的计算</description>
+<compatibility>向后兼容</compatibility>
+<product name="SHR" version="1.0"></product>
+<methods>
+<method name="process" description="取人员的主要任职组织和机票额度起始日期，结束日期，年个人机票额度的计算">
+<parameters>
+<parameter name="ctx" type="com.kingdee.bos.Context" description="应用上下文" isRequired="true"/>
+<parameter name="param" type="java.util.Map" description="参数值">
+<subparameter name="personID" type="java.lang.String" description="人员ID" />
+<subparameter name="annualSrdLmt" type="java.lang.String" description="年标准额度" />
+</parameter>
+</parameters>
+<return type="Object" description="返回一个对象值"></return>
+<exceptions>
+<exception>com.kingdee.bos.BOSException</exception>
+<exception>com.kingdee.eas.common.EASBizException</exception>
+</exceptions>
+</method>
+</methods>
+</service>
+
+===============================================机票台账==========================================================
+名称:机票_表单
+模型:com.kingdee.shr.custom.app.AirTicket
+uipk:com.kingdee.shr.custom.app.AirTicket.form
+配置内容:
+        <script src="${appPath}/customer/web/js/shr/base/depcustombill/DepCustomBillEditAirTicketExt.js" />
+        <jsClass name="shr.custom.bizbill.DepCustomBillEditAirTicketExt" />
+        <handler class="com.kingdee.shr.base.syssetting.web.handler.DEPCustomBillEditHandlerAirTicket" />
+        <toolbar>
+            <button name="viewSource" caption="查看档案" />
+        </toolbar>
+
+================================================机票清算=========================================================
+模型:
+uipk:
+
+
+
+
+================================================员工编辑-工作年限开发=========================================================
+名称：员工编辑
+模型：com.kingdee.eas.basedata.person.app.Person
+uipk:com.kingdee.eas.basedata.person.app.Person.form
+	<script src="${appPath}/customer/web/js/shr/emp/employeeEditExt.js" />
+    <jsClass name="shr.emp.EmployeeEditExt" />
+
+
+名称：职业信息历史多行表查看
+模型：com.kingdee.eas.hr.emp.app.PersonPositionHis
+uipk:com.kingdee.eas.hr.emp.app.PersonPositionHisMultiRow.form
+    <script src="${appPath}/customer/web/js/shr/emp/personPositionHisMultiRowEditExt.js" />
+    <jsClass name="shr.emp.PersonPositionHisMultiRowEditExt" />
+    <handler class="com.kingdee.eas.hr.emp.web.handler.PersonPositionHisMultiRowHanlderExt" />
+
+
+名称:职业信息历史多行表编辑
+模型:com.kingdee.eas.hr.emp.app.PersonPositionHis
+uipk:com.kingdee.eas.hr.emp.app.PersonPositionHisEdit.form
+    <script src="${appPath}/customer/web/js/shr/emp/personPositionHisFormEditExt.js" />
+    <jsClass name="shr.emp.PersonPositionHisFormEditExt" />
+    <handler class="com.kingdee.eas.hr.emp.web.handler.PersonPositionHisEditHanlderExt" />
+
+===============================================入职单开发=========================================================
+名称：入职申请form（专员）
+模型：com.kingdee.eas.hr.affair.app.EmpEnrollBizBill
+uipk:com.kingdee.eas.hr.affair.app.EmpEnrollBizBill.form
+     <script src="${appPath}/customer/web/js/shr/affair/hrman/empEnrollBizBillHrManEditExt.js" />
+    <jsClass name="shr.affair.hrman.EmpEnrollBizBillHrManEditExt" />
+    <handler class="com.kingdee.shr.affair.web.handler.hrman.EmpEnrollBizBillHrManEditHandlerExt" />
+
+
+名称：机票清算_表单
+uipk:com.kingdee.eas.hr.affair.app.TcktClearout.form
+  注释掉        <jsClass name="shr.custom.bizbill.DepCustomBillEdit" />，在<script src="${appPath}/commonplate/web/js/shr/base/depcustombill/DepCustomBillEdit.js" />
+ 后增加以下内容，然后保存
+ <script src="${appPath}/customer/web/js/shr/base/depcustombill/DepCustomBillEditTicketClearExt.js" />
+ <jsClass name="shr.custom.bizbill.DepCustomBillEditTicketClearExt" />
+ 
+
+
+
+
+ ====================================================osf配置文件================================================================================
+ 编码:Limit153
+名称:取人员的主要任职组织和机票额度起始日期，结束日期，年个人机票额度(从机票预算中取得后计算),年个人机票金额(取机票台账中的机票金额总和),年个人机票款清算金额
+服务类型:本地服务
+服务级别:模块级
+所属领域:人事-EMP
+服务名称:getPersonTicketClearout
+类别:员工信息
+配置:
+<service name="getPersonTicketClearout" interface="com.kingdee.bos.bsf.service.app.IHRMsfService"
+ class="com.kingdee.shr.base.syssetting.web.service.GetPersonTicketClearout"
+version="1.0" model="BASE">
+<description>取人员的主要任职组织和机票额度起始日期，结束日期，年个人机票额度(从机票预算中取得后计算),年个人机票金额(取机票台账中的机票金额总和),年个人机票款清算金额</description>
+<compatibility>向后兼容</compatibility>
+<product name="SHR" version="1.0"></product>
+<methods>
+<method name="process" description="取人员的主要任职组织和机票额度起始日期，结束日期，年个人机票额度的计算">
+<parameters>
+<parameter name="ctx" type="com.kingdee.bos.Context" description="应用上下文" isRequired="true"/>
+<parameter name="param" type="java.util.Map" description="参数值">
+<subparameter name="personID" type="java.lang.String" description="人员ID" />
+<subparameter name="clrtDate" type="java.lang.String" description="机票清算日期" />
+</parameter>
+</parameters>
+<return type="Object" description="返回一个对象值"></return>
+<exceptions>
+<exception>com.kingdee.bos.BOSException</exception>
+<exception>com.kingdee.eas.common.EASBizException</exception>
+</exceptions>
+</method>
+</methods>
+</service>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
