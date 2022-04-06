@@ -187,9 +187,9 @@ version="1.0" model="BASE">
 </service>
 
 
-
-
-
+uipk:empContractCompositeQuery_gree
+原本的handler注释掉
+    <handler class="com.kingdee.shr.batchContract.web.handler.ContractCompositionQueryHandlerExt" />
 
 
 
