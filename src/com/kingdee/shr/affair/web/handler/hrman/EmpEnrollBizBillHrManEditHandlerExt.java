@@ -8,6 +8,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.kingdee.eas.hr.affair.app.EmpEnrollBizBillControllerBean;
 import org.springframework.ui.ModelMap;
 
 import com.kingdee.bos.BOSException;
@@ -60,6 +61,7 @@ import com.kingdee.util.StringUtils;
  *
  */
 public class EmpEnrollBizBillHrManEditHandlerExt extends EmpEnrollBizBillHrManEditHandler{
+
 
 	/**
 	 * 获取预入职单据的字段信息

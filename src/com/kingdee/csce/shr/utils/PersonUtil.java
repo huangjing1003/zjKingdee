@@ -1,7 +1,13 @@
-package com.kingdee.csce.shr.utils;
+ package com.kingdee.csce.shr.utils;
 
-import cn.hutool.core.date.DateUtil;
-import cn.hutool.core.util.StrUtil;
+import java.math.BigDecimal;
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Calendar;
+import java.util.Date;
+
 import com.kingdee.bos.BOSException;
 import com.kingdee.bos.Context;
 import com.kingdee.bos.dao.ormapping.ObjectUuidPK;
@@ -20,24 +26,43 @@ import com.kingdee.eas.hr.ats.AtsLeaveBillEntryCollection;
 import com.kingdee.eas.hr.ats.AtsLeaveBillEntryFactory;
 import com.kingdee.eas.hr.ats.HolidayLimitCollection;
 import com.kingdee.eas.hr.ats.HolidayLimitFactory;
-import com.kingdee.eas.hr.base.*;
-import com.kingdee.eas.hr.emp.*;
+import com.kingdee.eas.hr.base.EmpLaborRelationInfo;
+import com.kingdee.eas.hr.base.EmpPosOrgRelationCollection;
+import com.kingdee.eas.hr.base.EmpPosOrgRelationFactory;
+import com.kingdee.eas.hr.base.EmpPosOrgRelationInfo;
+import com.kingdee.eas.hr.base.EmpPostExperienceHisCollection;
+import com.kingdee.eas.hr.base.EmpPostExperienceHisFactory;
+import com.kingdee.eas.hr.base.EmpPostExperienceHisInfo;
+import com.kingdee.eas.hr.emp.EmpMultiInfoCustomInfo;
+import com.kingdee.eas.hr.emp.EmpPostRankCollection;
+import com.kingdee.eas.hr.emp.EmpPostRankFactory;
+import com.kingdee.eas.hr.emp.EmpPostRankInfo;
+import com.kingdee.eas.hr.emp.EmployeeContractCollection;
+import com.kingdee.eas.hr.emp.EmployeeContractFactory;
+import com.kingdee.eas.hr.emp.EmployeeContractInfo;
+import com.kingdee.eas.hr.emp.PersonContactMethodCollection;
+import com.kingdee.eas.hr.emp.PersonContactMethodFactory;
+import com.kingdee.eas.hr.emp.PersonContactMethodInfo;
+import com.kingdee.eas.hr.emp.PersonLanguageInfo;
+import com.kingdee.eas.hr.emp.PersonPositionFactory;
+import com.kingdee.eas.hr.emp.PersonPositionHisCollection;
+import com.kingdee.eas.hr.emp.PersonPositionHisFactory;
+import com.kingdee.eas.hr.emp.PersonPositionHisInfo;
+import com.kingdee.eas.hr.emp.PersonPositionInfo;
 import com.kingdee.eas.hr.emp.app.util.SHREmpOptEmpLaborRelationUtil;
 import com.kingdee.eas.util.app.DbUtil;
 import com.kingdee.jdbc.rowset.IRowSet;
 import com.kingdee.shr.base.syssetting.BaseItemCustomInfo;
 import com.kingdee.shr.base.syssetting.context.SHRContext;
 import com.kingdee.shr.base.syssetting.util.MetaDataUtil;
-import com.kingdee.shr.compensation.*;
+import com.kingdee.shr.compensation.CmpEmpAccountCollection;
+import com.kingdee.shr.compensation.CmpEmpAccountFactory;
+import com.kingdee.shr.compensation.CmpEmpAccountInfo;
+import com.kingdee.shr.compensation.FixAdjustSalaryCollection;
+import com.kingdee.shr.compensation.FixAdjustSalaryFactory;
 import com.kingdee.util.StringUtils;
 
-import java.math.BigDecimal;
-import java.sql.SQLException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.util.Calendar;
-import java.util.Date;
+import cn.hutool.core.util.StrUtil;
 
 public class PersonUtil {
 
@@ -405,25 +430,7 @@ public class PersonUtil {
     }
     
     
-    /**
-     * 处理法语津贴数据
-     * @param userId
-     * @param leaveDate
-     * @param ctx
-     * @return
-     * @throws BOSException
-     */
-//    private static EmployeeSalaryChangeEntry getFranceAllowanceInfo(String userId, Date leaveDate, Context ctx) throws BOSException {
-//        EmployeeSalaryChangeEntry entry = null;
-//        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-//        String dateStr = format.format(leaveDate);
-//        String query = StrUtil.format("SELECT langBnsRank.name, startDate, endDate, person.id, person.name WHERE person.id = '{}' and endDate > '{}' order by startDate asc", userId, dateStr);
-//        PersonLanguageCollection personLanguageCollection = PersonLanguageFactory.getLocalInstance(ctx).getPersonLanguageCollection(query);
-//        if (!personLanguageCollection.isEmpty()) {
-//            entry = new EmployeeSalaryChangeEntry(personLanguageCollection.get(0));
-//        }
-//        return entry;
-//    }
+ 
     
     /**
      * 特殊处理法语津贴 2021-12-25
@@ -546,6 +553,7 @@ public class PersonUtil {
      */
     public static double getFiveRisks(Context ctx,String personId,String startDateStr,String endDateStr) throws BOSException, NumberFormatException, SQLException {
     	String empSocFilesId = "";
+    	
     	String checkExistSql = "SELECT  distinct  empSocFiles.Fid  empSocFilesId,empSocFilesEntry.FEFFECTDAY " + 
     			" FROM T_HR_SSocEmpSocFiles  empSocFiles " + 
     			" left join T_HR_SSocEmpSocFilesEntry  empSocFilesEntry on empSocFilesEntry.FBILLID = empSocFiles.Fid  " + 
@@ -553,7 +561,6 @@ public class PersonUtil {
     			" left join T_HR_SSocItem  item on item.fid = typeItem.FSOCITEMID where empSocFiles.FPERSONID ='"+personId+"' " ; 
 		String checkExistOneSql = checkExistSql  
 				+ " and empSocFilesEntry.FEFFECTDAY<={ts'"+endDateStr+"'}  order by empSocFilesEntry.FEFFECTDAY desc ";
-    	System.out.println("=====checkExistOneSql is:"+checkExistOneSql);
 		IRowSet iRowSet1 = DbUtil.executeQuery(ctx, checkExistOneSql);
     	if(iRowSet1.next()) {
     		empSocFilesId = iRowSet1.getString("empSocFilesId");
@@ -570,7 +577,7 @@ public class PersonUtil {
      		StringBuffer buffer = new StringBuffer("/*dialect*/ ");
     		buffer.append(" SELECT sum(total) money FROM ( ");
     		buffer.append(" SELECT empSocFiles.FPERSONID  personId,typeItem.FSELFFIXEDPAY ,item.fname_l2, ");
-    		buffer.append(" (empSocFilesEntry.FSELFBASE*(typeItem.FSELFPREC/100)) total ");
+    		buffer.append(" ((empSocFilesEntry.FSELFBASE*(typeItem.FSELFPREC/100))+typeItem.FSELFFIXEDPAY) total ");
     		buffer.append(" FROM T_HR_SSocEmpSocFiles  empSocFiles ");
     		buffer.append(" left join T_HR_SSocEmpSocFilesEntry  empSocFilesEntry on empSocFilesEntry.FBILLID = empSocFiles.Fid ");
     		buffer.append(" left join T_HR_SSocTypeItemHis typeItem on typeItem.fid = empSocFilesEntry.FSOCTYPEITEMID  ");

@@ -7,8 +7,8 @@
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.USER_LIBRARY/SHR"/>
 	<classpathentry kind="lib" path="F:/项目文档/其他/2021发布/depLvTripTckBill.jar" sourcepath="F:/项目文档/其他/发布/depLvTripTckBill.jar"/>
 	<classpathentry kind="lib" path="F:/项目文档/其他/2021发布/ats_leave_trip_billTicket_src.jar"/>
-	<classpathentry kind="lib" path="C:/Users/ASUS/Desktop/addon_customer_shr-ext.jar"/>
 	<classpathentry kind="lib" path="F:/项目文档/其他/2021发布/addon_customer_hutool-all-5.6.5.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/test"/>
+	<classpathentry kind="lib" path="G:/addon_customer_shr-ext (1).jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

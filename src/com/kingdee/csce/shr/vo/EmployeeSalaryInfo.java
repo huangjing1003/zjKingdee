@@ -9,6 +9,7 @@ import java.math.BigDecimal;
 public class EmployeeSalaryInfo extends CoreBaseInfo implements Serializable {
 
     public EmployeeSalaryInfo() {
+    	
         this.salarySummary = new EmployeeSalarySummary();
     }
 

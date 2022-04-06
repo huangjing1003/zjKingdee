@@ -20,6 +20,7 @@ import com.kingdee.eas.hr.base.SHRBillBaseTemplateEntryInfo;
 import com.kingdee.eas.hr.emp.*;
 import com.kingdee.eas.util.app.DbUtil;
 import com.kingdee.jdbc.rowset.IRowSet;
+import com.kingdee.shr.ats.web.handler.AtsTripBillBatchNewEditHandler;
 import com.kingdee.shr.base.syssetting.BaseItemCustomInfo;
 import com.kingdee.shr.base.syssetting.context.SHRContext;
 import com.kingdee.shr.base.syssetting.exception.SHRWebException;
@@ -50,12 +51,6 @@ import java.util.Map;
  * @date 2021-01-15 11:58:27
  */
 public class ResignApplicationHandler extends DEPCustomBillEditHandler {
-	
-//	RiseBizBillHrManEditHandler
-//	GetPersonRelationTypeHisService
-//	RiseBizBillControllerBean
-//	HRBillBaseControllerBean
-	
 
     private static Logger log = LoggerFactory.getLogger(ResignApplicationHandler.class);
 

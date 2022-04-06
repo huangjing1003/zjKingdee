@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<facade xmlns="com.kingdee.bos.metadata">
+    <package>com.kingdee.eas.custom.ats.app</package>
+    <name>SynCardFacade</name>
+    <alias>facade[com.kingdee.eas.custom.ats.app.SynCardFacade].alias</alias>
+    <description>facade[com.kingdee.eas.custom.ats.app.SynCardFacade].description</description>
+    <userDefined>true</userDefined>
+    <bosType>049A3ABF</bosType>
+    <stereoType>false</stereoType>
+    <businessImplName>com.kingdee.eas.custom.ats.SynCardFacade</businessImplName>
+    <businessControllerName>com.kingdee.eas.custom.ats.app.SynCardFacadeController</businessControllerName>
+    <accessLevel>public</accessLevel>
+    <subClassingMode>normal</subClassingMode>
+    <methods>
+        <method>
+            <name>synData</name>
+            <isListenerMethod>false</isListenerMethod>
+            <alias>facade[com.kingdee.eas.custom.ats.app.SynCardFacade].methods.method[synData].alias</alias>
+            <description>facade[com.kingdee.eas.custom.ats.app.SynCardFacade].methods.method[synData].description</description>
+            <innerID>c570446e-e040-4277-9058-f20032a15fb3</innerID>
+            <accessLevel>public</accessLevel>
+            <subClassingMode>normal</subClassingMode>
+            <returnValueType />
+            <metadataRef />
+            <transactionAttribute>Supports</transactionAttribute>
+            <userDefined>true</userDefined>
+            <userDefinedLogic />
+            <parameters>
+                <parameter>
+                    <name>days</name>
+                    <alias>facade[com.kingdee.eas.custom.ats.app.SynCardFacade].methods.method[synData].parameters.parameter[days].alias</alias>
+                    <description>facade[com.kingdee.eas.custom.ats.app.SynCardFacade].methods.method[synData].parameters.parameter[days].description</description>
+                    <direction>in</direction>
+                    <dataType>Integer</dataType>
+                    <metadataRef />
+                    <userDefined>true</userDefined>
+                </parameter>
+                <parameter>
+                    <name>userNumber</name>
+                    <alias>facade[com.kingdee.eas.custom.ats.app.SynCardFacade].methods.method[synData].parameters.parameter[userNumber].alias</alias>
+                    <description>facade[com.kingdee.eas.custom.ats.app.SynCardFacade].methods.method[synData].parameters.parameter[userNumber].description</description>
+                    <direction>in</direction>
+                    <dataType>String</dataType>
+                    <metadataRef />
+                    <userDefined>true</userDefined>
+                </parameter>
+            </parameters>
+            <configured>false</configured>
+        </method>
+    </methods>
+    <resource>
+        <rs key="facade[com.kingdee.eas.custom.ats.app.SynCardFacade].alias">
+            <lang locale="en_US" value="null" />
+            <lang locale="zh_CN" value="同步企业微信打卡数据" />
+            <lang locale="zh_HK" value="同步企業微信打卡數據" />
+            <lang locale="zh_TW" value="同步企業微信打卡數據" />
+        </rs>
+        <rs key="facade[com.kingdee.eas.custom.ats.app.SynCardFacade].description">
+            <lang locale="en_US" value="null" />
+            <lang locale="zh_CN" value="null" />
+            <lang locale="zh_HK" value="null" />
+            <lang locale="zh_TW" value="null" />
+        </rs>
+        <rs key="facade[com.kingdee.eas.custom.ats.app.SynCardFacade].extendedProperty.userDefined">
+            <lang locale="en_US" value="true" />
+            <lang locale="zh_CN" value="true" />
+            <lang locale="zh_TW" value="true" />
+        </rs>
+        <rs key="facade[com.kingdee.eas.custom.ats.app.SynCardFacade].methods.method[synData].alias">
+            <lang locale="en_US" value="null" />
+            <lang locale="zh_CN" value="同步打卡数据" />
+            <lang locale="zh_HK" value="同步打卡數據" />
+            <lang locale="zh_TW" value="同步打卡數據" />
+        </rs>
+        <rs key="facade[com.kingdee.eas.custom.ats.app.SynCardFacade].methods.method[synData].description">
+            <lang locale="en_US" value="null" />
+            <lang locale="zh_CN" value="null" />
+            <lang locale="zh_HK" value="null" />
+            <lang locale="zh_TW" value="null" />
+        </rs>
+        <rs key="facade[com.kingdee.eas.custom.ats.app.SynCardFacade].methods.method[synData].parameters.parameter[days].alias">
+            <lang locale="en_US" value="null" />
+            <lang locale="zh_CN" value="前沿天数" />
+            <lang locale="zh_HK" value="前沿天數" />
+            <lang locale="zh_TW" value="前沿天數" />
+        </rs>
+        <rs key="facade[com.kingdee.eas.custom.ats.app.SynCardFacade].methods.method[synData].parameters.parameter[days].description">
+            <lang locale="en_US" value="null" />
+            <lang locale="zh_CN" value="" />
+            <lang locale="zh_TW" value="null" />
+        </rs>
+        <rs key="facade[com.kingdee.eas.custom.ats.app.SynCardFacade].methods.method[synData].parameters.parameter[userNumber].alias">
+            <lang locale="en_US" value="null" />
+            <lang locale="zh_CN" value="用户登录账号" />
+            <lang locale="zh_HK" value="用戶登錄賬號" />
+            <lang locale="zh_TW" value="用戶登錄賬號" />
+        </rs>
+        <rs key="facade[com.kingdee.eas.custom.ats.app.SynCardFacade].methods.method[synData].parameters.parameter[userNumber].description">
+            <lang locale="en_US" value="null" />
+            <lang locale="zh_CN" value="" />
+            <lang locale="zh_TW" value="null" />
+        </rs>
+    </resource>
+</facade>
+

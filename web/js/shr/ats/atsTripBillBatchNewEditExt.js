@@ -1,4 +1,4 @@
-/**
+ /**
  * 名称：出差单-ATS-出差单表单-批量新增form
  * uipk:com.kingdee.eas.hr.ats.app.AtsTripBillBatchNew
  * 模型:com.kingdee.eas.hr.ats.app.AtsTripBill
@@ -14,6 +14,7 @@ shr.defineClass("shr.ats.atsTripBillBatchNewEditExt", shr.ats.atsTripBillBatchNe
 			//绑定分录的人员改变事件
 			that.personF7ChangeEvent();
 			that.leaveTicketTypeChange();//绑定休假机票购买方式改变事件
+			that.hrOrgUnitChangeEvent();//绑定考勤业务组织改变事件
 		}
 	},
 	/**
@@ -40,7 +41,8 @@ shr.defineClass("shr.ats.atsTripBillBatchNewEditExt", shr.ats.atsTripBillBatchNe
 		  var cityExpense =  $("#cityExpense").val();
 		  var otherExpense =  $("#otherExpense").val();
 		  var total = Number(tripExpense)+Number(stayExpense)+Number(foodExpense)+Number(cityExpense)+Number(otherExpense);
-		  $("#totalBudget").val(total);
+		  //$("#totalBudget").val(total);
+		  $('#totalBudget').shrTextField("setValue", total);
 	   });
 	},
 	/**
@@ -94,6 +96,27 @@ shr.defineClass("shr.ats.atsTripBillBatchNewEditExt", shr.ats.atsTripBillBatchNe
 				}
 			}
 		});
-	} 
-	
+	},
+	//主办单位按照考勤业务组织过滤
+	hrOrgUnitChangeEvent: function() {
+          const _self = this;
+      	  //页面加载时有默认值进行过滤
+          if($("#hrOrgUnit").shrPromptBox("getValue")){
+	    var cid = $("#hrOrgUnit").shrPromptBox("getValue").name;
+	    const _filter = " HROrgUnit.name = '" + cid + "'";
+            _self.getField("adminOrg").shrPromptBox("setFilter",_filter);
+          };
+
+          _self.getField("hrOrgUnit").shrPromptBox("option", {
+          onchange: function (e, value) {
+            const currentValue = value.current;
+            if (currentValue === null) {
+              return;
+            }
+            const filter = " HROrgUnit.name = '" + currentValue.name + "'";
+            _self.getField("adminOrg").shrPromptBox("setFilter",filter);
+          }
+        });
+    },
+    
 });

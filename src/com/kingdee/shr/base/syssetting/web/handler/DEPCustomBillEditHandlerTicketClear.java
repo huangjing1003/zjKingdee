@@ -42,9 +42,10 @@ public class DEPCustomBillEditHandlerTicketClear extends DEPCustomBillEditHandle
 	 * @param response
 	 * @param modelMap
 	 * @throws SHRWebException 
+	 * @throws ParseException 
 	 */
 	public void getPersonInfoAction(HttpServletRequest request, 
-			HttpServletResponse response, ModelMap modelMap) throws SHRWebException {
+			HttpServletResponse response, ModelMap modelMap) throws SHRWebException, ParseException {
 		String personId = request.getParameter("personId");
         Context ctx = SHRContext.getInstance().getContext();
         try {

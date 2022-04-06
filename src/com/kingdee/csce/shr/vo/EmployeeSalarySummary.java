@@ -1,4 +1,4 @@
-package com.kingdee.csce.shr.vo;
+ package com.kingdee.csce.shr.vo;
 
 import com.kingdee.csce.shr.bo.EmployeeSalaryChangeEntry;
 
@@ -14,7 +14,7 @@ public class EmployeeSalarySummary implements Serializable {
      */
     private BigDecimal baseRankSalary;
     /**
-     * 海外津贴系数
+     * 系数
      */
     private BigDecimal overseaAllowanceCoefficient;
     /**
@@ -144,7 +144,6 @@ public class EmployeeSalarySummary implements Serializable {
         setAnnualSalaryBudget(new BigDecimal(0));
         setAnnualAllowance(new BigDecimal(0));
         setAnnualIncomeBudget(new BigDecimal(0));
-        // language
         setEnglishAllowance(BigDecimal.ZERO);
         setFranceAllowance(BigDecimal.ZERO);
         formula = false;
@@ -452,11 +451,10 @@ public class EmployeeSalarySummary implements Serializable {
     }
 
     public void calcDynamicSalary() {
-//        if (formula) {
-//        	//法语津贴
-//            setFranceAllowance(getFranceAllowance().multiply(getBaseRankSalary()));
-//        }
-        setOverseaAllowance(getBaseRankSalary().multiply(getOverseaAllowanceCoefficient()));
+    	
+        //计算海外津贴,进行四舍五入取整
+        BigDecimal multiply = getBaseRankSalary().multiply(getOverseaAllowanceCoefficient());
+        setOverseaAllowance(multiply.setScale(0, BigDecimal.ROUND_HALF_EVEN));
         //5月基薪=1职级基薪+3海外津贴+4管理岗薪；
         setBaseMonthlySalary(getBaseRankSalary()
                 .add(getOverseaAllowance())

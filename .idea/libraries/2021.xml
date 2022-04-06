@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="2021发布">
+    <CLASSES>
+      <root url="file://F:/项目文档/其他/2021发布" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://F:/项目文档/其他/2021发布/Archive(1)/shr-ext/src" />
+      <root url="file://F:/项目文档/其他/2021发布" />
+    </SOURCES>
+    <jarDirectory url="file://F:/项目文档/其他/2021发布" recursive="false" />
+    <jarDirectory url="file://F:/项目文档/其他/2021发布" recursive="false" type="SOURCES" />
+  </library>
+</component>

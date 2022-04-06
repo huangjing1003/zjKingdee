@@ -1,6 +1,7 @@
 package com.kingdee.shr.base.syssetting.web.handler;
 
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -74,9 +75,10 @@ public class DEPCustomBillEditHandlerAirTicket extends  DEPCustomBillEditHandler
 	 * @param response
 	 * @param modelMap
 	 * @throws SHRWebException 
+	 * @throws ParseException 
 	 */
 	public void getPersonInfoAction(HttpServletRequest request, 
-			HttpServletResponse response, ModelMap modelMap) throws SHRWebException {
+			HttpServletResponse response, ModelMap modelMap) throws SHRWebException, ParseException {
 		String personId = request.getParameter("personId");
         Context ctx = SHRContext.getInstance().getContext();
         try {

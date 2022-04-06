@@ -178,7 +178,10 @@ public class DEPCustomBillEditHandlerExt extends DEPCustomBillEditHandler
       } catch (SQLException e) {
         e.printStackTrace();
         throw new ShrWebBizException(e.getMessage());
-      }
+      } catch (ParseException e) {
+		e.printStackTrace();
+        throw new ShrWebBizException(e.getMessage());
+	}
       entryColl.add(entryInfo);
       billInfo.put("entrys", entryColl);
     } else {
@@ -328,7 +331,10 @@ public class DEPCustomBillEditHandlerExt extends DEPCustomBillEditHandler
       } catch (SQLException e) {
         e.printStackTrace();
         throw new ShrWebBizException(e.getMessage());
-      }
+      } catch (ParseException e1) {
+		e1.printStackTrace();
+		throw new ShrWebBizException(e1.getMessage());
+	}
       System.out.println("===========添加完之后 billInfo is:" + billInfo + "=====entryColl is:" + entryColl);
     }
   }
